@@ -16,9 +16,9 @@ contract Array {
         return balances[i];
     }
 
-    // function readWholeBalances() external view returns (uint[]) {
-    //     return balances;
-    // }
+    function readWholeBalances() external view returns (uint[] memory) {
+        return balances;
+    }
 
     function updateBalances(uint i, uint newValue) external {
         balances[i] = newValue;
