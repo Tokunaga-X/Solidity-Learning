@@ -10,4 +10,19 @@ pragma solidity ^0.8.0;
 contract Calculator {
     uint256 public result;
 
+    function add(uint256 input) public {
+        result = result + input;
+    }
+
+    function subtract(uint256 input) public {
+        result = result - input;
+    }
+
+    function multiply(uint256 input) public {
+        result = result * input;
+    }
+
+    function getResult() public view returns (uint256) {
+        return result;
+    }
 }
