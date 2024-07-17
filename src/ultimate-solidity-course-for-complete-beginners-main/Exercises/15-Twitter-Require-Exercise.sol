@@ -13,6 +13,8 @@ contract Twitter {
         uint256 likes;
     }
 
+    uint16 constant TWEET_MAX_LENGTH = 280;
+
     // add our code
     mapping(address => Tweet[]) public tweets;
 
@@ -20,7 +22,7 @@ contract Twitter {
         // conditional
         // if tweet length <= 280 then we are good, otherwise we revert
         require(
-            bytes(_tweet).length < 280,
+            bytes(_tweet).length < TWEET_MAX_LENGTH,
             "tweet length limit is 280 characters"
         );
 
