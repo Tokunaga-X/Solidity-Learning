@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 // 1️⃣ Add id to Tweet Struct to make every Tweet Unique
-// 2️⃣ Set the id to be the Tweet[] length 
+// 2️⃣ Set the id to be the Tweet[] length
 // HINT: you do it in the createTweet function
 // 3️⃣ Add a function to like the tweet
 // HINT: there should be 2 parameters, id and author
@@ -12,16 +12,17 @@
 pragma solidity ^0.8.0;
 
 contract Twitter {
-
     uint16 public MAX_TWEET_LENGTH = 280;
 
     struct Tweet {
+        uint256 id;
         address author;
         string content;
         uint256 timestamp;
         uint256 likes;
     }
-    mapping(address => Tweet[] ) public tweets;
+
+    mapping(address => Tweet[]) public tweets;
     address public owner;
 
     constructor() {
@@ -33,14 +34,27 @@ contract Twitter {
         _;
     }
 
+    function likeTweet(uint16 _id, address author) external {
+        tweets[author][_id].likes += 1;
+    }
+
+    function unLikeTweet(uint16 _id, address author) external {
+        require(tweets[author][_id].likes > 0, "there is not likes");
+        tweets[author][_id].likes -= 1;
+    }
+
     function changeTweetLength(uint16 newTweetLength) public onlyOwner {
         MAX_TWEET_LENGTH = newTweetLength;
     }
 
     function createTweet(string memory _tweet) public {
-        require(bytes(_tweet).length <= MAX_TWEET_LENGTH, "Tweet is too long bro!" );
+        require(
+            bytes(_tweet).length <= MAX_TWEET_LENGTH,
+            "Tweet is too long bro!"
+        );
 
         Tweet memory newTweet = Tweet({
+            id: tweets[msg.sender].length,
             author: msg.sender,
             content: _tweet,
             timestamp: block.timestamp,
@@ -50,12 +64,11 @@ contract Twitter {
         tweets[msg.sender].push(newTweet);
     }
 
-    function getTweet( uint _i) public view returns (Tweet memory) {
+    function getTweet(uint _i) public view returns (Tweet memory) {
         return tweets[msg.sender][_i];
     }
 
-    function getAllTweets(address _owner) public view returns (Tweet[] memory ){
+    function getAllTweets(address _owner) public view returns (Tweet[] memory) {
         return tweets[_owner];
     }
-
 }
