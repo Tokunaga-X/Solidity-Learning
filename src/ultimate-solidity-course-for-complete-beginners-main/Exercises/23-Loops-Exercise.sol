@@ -29,5 +29,12 @@ contract ExpenseTracker {
 
     function getTotalExpenses(address _user) public view returns (uint) {
         // Your code here
+        uint256 totalExpense = 0;
+        for (uint i = 0; i < expenses.length; i++) {
+            if (expenses[i].user == _user) {
+                totalExpense += expenses[i].amount;
+            }
+        }
+        return totalExpense;
     }
 }
