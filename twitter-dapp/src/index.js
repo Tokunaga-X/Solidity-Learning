@@ -371,6 +371,7 @@ function setConnected(address) {
     "Connected: " + shortAddress(address);
   document.getElementById("connectMessage").style.display = "none";
   document.getElementById("tweetForm").style.display = "block";
+  document.getElementById("connectWalletBtn").style.display = "none";
 
   // 6️⃣ Call the displayTweets function with address as input
   // This is the function in the javascript code, not smart contract 😉

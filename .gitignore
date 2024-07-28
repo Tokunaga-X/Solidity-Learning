@@ -2,3 +2,4 @@ cache/
 out/
 /node_modules
 yarn.lock
+/twitter-dapp-react/node_modules
