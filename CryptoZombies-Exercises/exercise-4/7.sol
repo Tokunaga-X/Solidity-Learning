@@ -3,7 +3,6 @@ pragma solidity >=0.5.0 <0.6.0;
 import "./zombiefeeding.sol";
 
 contract ZombieHelper is ZombieFeeding {
-    // 1. Define levelUpFee here
     uint levelUpFee = 0.001 ether;
 
     modifier aboveLevel(uint _level, uint _zombieId) {
@@ -11,25 +10,33 @@ contract ZombieHelper is ZombieFeeding {
         _;
     }
 
-    // 2. Insert levelUp function here
+    function withdraw() external onlyOwner {
+        address _owner = owner();
+        _owner.transfer(address(this).balance);
+    }
+
+    function setLevelUpFee(uint _fee) external onlyOwner {
+        levelUpFee = _fee;
+    }
+
     function levelUp(uint _zombieId) external payable {
         require(msg.value == levelUpFee);
         zombies[_zombieId].level++;
     }
 
+    // 1. Modify this function to use `ownerOf`:
     function changeName(
         uint _zombieId,
         string calldata _newName
-    ) external aboveLevel(2, _zombieId) {
-        require(msg.sender == zombieToOwner[_zombieId]);
+    ) external aboveLevel(2, _zombieId) ownerOf(_zombieId) {
         zombies[_zombieId].name = _newName;
     }
 
+    // 2. Do the same with this function:
     function changeDna(
         uint _zombieId,
         uint _newDna
-    ) external aboveLevel(20, _zombieId) {
-        require(msg.sender == zombieToOwner[_zombieId]);
+    ) external aboveLevel(20, _zombieId) ownerOf(_zombieId) {
         zombies[_zombieId].dna = _newDna;
     }
 
