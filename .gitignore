@@ -1,5 +1,5 @@
 cache/
 out/
-/node_modules
+thirdWeb-Learn/node_modules
 yarn.lock
 /twitter-dapp-react/node_modules
